@@ -148,9 +148,9 @@ function reservationDuringHours(req, res, next) {
 
 function hasValidPeople(req, res, next) {
   const people = req.body.data.people;
-  const valid = Number.isInteger(people);
-  
-  if (people > 0 && valid) {
+  const valid = Number(people);
+  console.log(valid, typeof valid);
+  if (people > 0 && typeof valid === 'number') {
     return next();
   }
   next({
@@ -187,6 +187,7 @@ function read(req, res) {
 
 async function create(req, res) {
   const newReservation = req.body.data;
+  console.log(newReservation);
   const data = await service.create(newReservation);
   res.status(201).json({ data });
 }
